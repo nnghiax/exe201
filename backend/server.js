@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 require('dotenv').config()
+const apiAuthen = require('./router/apiAuthen')
 
 
 const hostname = process.env.HOSTNAME
@@ -20,6 +21,9 @@ mongoose.connect(`${url}${dbName}`, {
 })
     .then(() => console.log('Connected to MongoDB successfully'))
     .catch((err) => console.error('MongoDB connection error:', err));
+
+// AUTHENTICATION
+app.use('/auth', apiAuthen)
 
 
 app.listen(port, () => {
