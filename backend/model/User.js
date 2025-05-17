@@ -34,7 +34,10 @@ const userSchema = new mongoose.Schema({
         default: 'customer'
     },
     address: [addressSchema],
-    avatar: String
+    avatar: {
+        type: String,
+        default: 'https://res.cloudinary.com/dh4vnrtg5/image/upload/v1747473243/avatar_user_orcdde.jpg'
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('users', userSchema);

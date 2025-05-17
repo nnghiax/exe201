@@ -24,7 +24,6 @@ const storeRequestSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    image: String,
     status: {
         type: String,
         enum: ['pending', 'approved', 'rejected'],

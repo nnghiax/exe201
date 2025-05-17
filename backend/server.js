@@ -4,6 +4,7 @@ const cors = require('cors')
 require('dotenv').config()
 const apiAuth = require('./router/apiAuth')
 const apiCate = require('./router/apiCate')
+const apiRequest = require('./router/apiRequest')
 
 
 const hostname = process.env.HOSTNAME
@@ -28,6 +29,9 @@ app.use('/auth', apiAuth)
 
 // CATEGORY
 app.use('/cate', apiCate)
+
+// STORE REQUEST
+app.use('/request', apiRequest)
 
 
 app.listen(port, () => {

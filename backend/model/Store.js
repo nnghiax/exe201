@@ -25,7 +25,10 @@ const storeSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    image: String,
+    image: {
+        type: String,
+        default: 'https://res.cloudinary.com/dh4vnrtg5/image/upload/v1747472818/avatar_shop_i34yq6.jpg'
+    },
     isActive: {
         type: Boolean,
         default: false
