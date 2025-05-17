@@ -28,7 +28,8 @@ const storeController = {
         try {
             const storeId = req.params.storeId
             const userId = req.userId
-            const {name, description, address, phone, image} = req.body
+            const {name, description, address, phone} = req.body
+            const image = req.file?.path
 
             const store = await Store.findById(storeId)
             if(!store){
@@ -44,7 +45,7 @@ const storeController = {
             if(description !== undefined) updateFields.description = description
             if(address !== undefined) updateFields.address = address
             if(phone !== undefined) updateFields.phone = phone
-            if(image !== undefined) updateFields.image = image
+            if(image) updateFields.image = image
 
             const updateStore = await Store.findByIdAndUpdate(
                 storeId,
