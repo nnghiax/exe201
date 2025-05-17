@@ -5,6 +5,7 @@ require('dotenv').config()
 const apiAuth = require('./router/apiAuth')
 const apiCate = require('./router/apiCate')
 const apiRequest = require('./router/apiRequest')
+const apiStore = require('./router/apiStore')
 
 
 const hostname = process.env.HOSTNAME
@@ -32,6 +33,9 @@ app.use('/cate', apiCate)
 
 // STORE REQUEST
 app.use('/request', apiRequest)
+
+// STORE
+app.use('/store', apiStore)
 
 
 app.listen(port, () => {

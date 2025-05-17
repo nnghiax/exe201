@@ -38,6 +38,7 @@ const middlewareController = {
         if(!req.user || req.user.role !== 'store_owner'){
             return res.status(403).json({success: false, message: 'Access denied. Owner only'})
         }
+        next()
     }
 }
 
