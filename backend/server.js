@@ -2,7 +2,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 require('dotenv').config()
-const apiAuthen = require('./router/apiAuthen')
+const apiAuth = require('./router/apiAuth')
+const apiCate = require('./router/apiCate')
 
 
 const hostname = process.env.HOSTNAME
@@ -23,7 +24,10 @@ mongoose.connect(`${url}${dbName}`, {
     .catch((err) => console.error('MongoDB connection error:', err));
 
 // AUTHENTICATION
-app.use('/auth', apiAuthen)
+app.use('/auth', apiAuth)
+
+// CATEGORY
+app.use('/cate', apiCate)
 
 
 app.listen(port, () => {
