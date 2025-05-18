@@ -26,13 +26,25 @@ const productSchema = mongoose.Schema({
         type: String,
         default: ''
     },
-    sizes: [
-        {
-            label: String,       // ví dụ: 'S', 'M', 'L', 'XL'
-            quantity: Number,    // số lượng có sẵn cho size đó
-            price: Number        // giá thuê theo size
-        }
-    ],
+    sizes: {
+        type: [String],
+        enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true,
+        min: 1
+    },
+    price: {
+        type: Number,
+        required: true,
+        min: 1
+    },
+    color: {
+        type: String,
+        required: true
+    },
     isAvailable: {
         type: Boolean,
         default: true

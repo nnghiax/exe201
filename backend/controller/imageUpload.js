@@ -34,4 +34,4 @@ const deleteImage = async (imageUrl) => {
 
 
 
-module.exports = uploadCloud
+module.exports = {uploadCloud, deleteImage}

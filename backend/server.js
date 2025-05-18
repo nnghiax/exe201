@@ -6,6 +6,7 @@ const apiAuth = require('./router/apiAuth')
 const apiCate = require('./router/apiCate')
 const apiRequest = require('./router/apiRequest')
 const apiStore = require('./router/apiStore')
+const apiProduct = require('./router/apiProduct')
 
 
 const hostname = process.env.HOSTNAME
@@ -36,6 +37,9 @@ app.use('/request', apiRequest)
 
 // STORE
 app.use('/store', apiStore)
+
+// PRODUCT
+app.use('/product', apiProduct)
 
 
 app.listen(port, () => {
