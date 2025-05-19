@@ -68,6 +68,19 @@ const productController = {
         }
     },
 
+    detailProduct: async (req, res) => {
+        try {
+            const proId = req.params.proId
+            const product = await Product.findById(proId)
+            if(!product){
+                return res.status(404).json({message: 'Product not found'})
+            }
+            return res.status(200).json({data: product})
+        } catch (error) {
+            return res.status(500).json(error.message)
+        }
+    },
+
     updateProduct: async (req, res) => {
         try {
             const proId = req.params.proId
