@@ -7,6 +7,7 @@ const apiCate = require('./router/apiCate')
 const apiRequest = require('./router/apiRequest')
 const apiStore = require('./router/apiStore')
 const apiProduct = require('./router/apiProduct')
+const apiCart = require('./router/apiCart')
 
 
 const hostname = process.env.HOSTNAME
@@ -40,6 +41,9 @@ app.use('/store', apiStore)
 
 // PRODUCT
 app.use('/product', apiProduct)
+
+// CART
+app.use('/cart', apiCart)
 
 
 app.listen(port, () => {
