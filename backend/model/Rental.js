@@ -47,6 +47,16 @@ const rentalSchema = new mongoose.Schema({
         required: true,
         min: 0
     },
+    paymentMethod: {
+        type: String,
+        enum: ['vnpay', 'cod'],
+        required: true
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['unpaid', 'paid'],
+        default: 'unpaid'
+    },
     status: {
         type: String,
         enum: ['pending', 'confirmed', 'cancelled', 'completed'],
