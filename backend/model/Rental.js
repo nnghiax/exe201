@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const rentalSchema = mongoose.Schema({
+const rentalSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users',
@@ -11,20 +11,24 @@ const rentalSchema = mongoose.Schema({
         ref: 'stores',
         required: true
     },
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'products',
-        required: true
-    },
-    size: {
-        type: String,
-        required: true
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        min: 1
-    },
+    items: [
+        {
+            productId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products',
+                required: true
+            },
+            size: {
+                type: String,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1
+            }
+        }
+    ],
     rentalDate: {
         type: Date,
         required: true
@@ -47,8 +51,7 @@ const rentalSchema = mongoose.Schema({
         type: String,
         enum: ['pending', 'confirmed', 'cancelled', 'completed'],
         default: 'pending'
-    },
+    }
+}, { timestamps: true });
 
-}, { timestamps: true })
-
-module.exports = mongoose.model('rentals', rentalSchema)
+module.exports = mongoose.model('rentals', rentalSchema);
