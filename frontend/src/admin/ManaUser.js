@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../admin/Sidebar';
+import HeaderAdmin from '../admin/HeaderAdmin';
 import { Container, Row, Col, Table, Card, Navbar, Image, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -52,12 +53,7 @@ function ManaUser() {
                     paddingBottom: '40px',
                 }}
             >
-                <Navbar bg="white" className="px-4 shadow-sm mb-4">
-                    <Navbar.Brand className="fw-bold">👥 Quản lý người dùng</Navbar.Brand>
-                    <Navbar.Collapse className="justify-content-end">
-                        <Navbar.Text>Chào, Admin 👤</Navbar.Text>
-                    </Navbar.Collapse>
-                </Navbar>
+                <HeaderAdmin />
 
                 <Container fluid className="px-4">
                     <Row className="mb-3">
@@ -116,10 +112,12 @@ function ManaUser() {
                                                 <td className="text-start" style={{ padding: '12px 15px' }}>{u.email}</td>
                                                 <td style={{ padding: '12px 8px', textTransform: 'capitalize', fontWeight: '600', textAlign: 'center' }}>{u.role}</td>
                                                 <td className="text-start" style={{ padding: '12px 15px' }}>
-                                                    {u.address && u.address.length > 0
-                                                        ? `${u.address.find(a => a.isDefault)?.street || u.address[0].street}, ${u.address.find(a => a.isDefault)?.ward || u.address[0].ward}, ${u.address.find(a => a.isDefault)?.district || u.address[0].district}, ${u.address.find(a => a.isDefault)?.city || u.address[0].city}`
-                                                        : '—'}
+                                                    {u.address && (u.address.street || u.address.ward || u.address.district || u.address.city)
+                                                        ? `${u.address.street || ''}, ${u.address.ward || ''}, ${u.address.district || ''}, ${u.address.city || ''}`
+                                                        : 'Chưa cập nhật'}
                                                 </td>
+
+
 
                                             </tr>
                                         ))
