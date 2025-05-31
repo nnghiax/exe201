@@ -20,11 +20,13 @@ function Login() {
 
     try {
       const res = await axios.post('http://localhost:9999/auth/login', { email, password });
-      localStorage.setItem('user', JSON.stringify(res.data.user))
-      localStorage.setItem('accessToken', res.data.accessToken);
-      setMessage('Đăng nhập thành công!');
-      setVariant('success');
-      setTimeout(() => navigate('/'), 1500);
+      if (res.status === 200) {
+        localStorage.setItem('user', JSON.stringify(res.data.user))
+        localStorage.setItem('token', res.data.accessToken);
+        setMessage('Đăng nhập thành công!');
+        setVariant('success');
+        setTimeout(() => navigate('/'), 1500);
+      }
     } catch (error) {
       const errMsg = error.response?.data?.message || 'Lỗi không xác định';
       setMessage(errMsg);
@@ -43,7 +45,7 @@ function Login() {
 
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formEmail">
-                <Form.Label className="fw-semibold text-brown" style={{float: 'left'}}>Email</Form.Label>
+                <Form.Label className="fw-semibold text-brown" style={{ float: 'left' }}>Email</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Nhập email"
@@ -54,7 +56,7 @@ function Login() {
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label className="fw-semibold text-brown" style={{float: 'left'}}>Mật khẩu</Form.Label>
+                <Form.Label className="fw-semibold text-brown" style={{ float: 'left' }}>Mật khẩu</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Nhập mật khẩu"
