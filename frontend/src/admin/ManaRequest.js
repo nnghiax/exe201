@@ -4,6 +4,7 @@ import {
     Spinner, Navbar, Modal
 } from 'react-bootstrap';
 import Sidebar from '../admin/Sidebar';
+import HeaderAdmin from '../admin/HeaderAdmin'; 
 import axios from 'axios';
 
 function ManaRequest() {
@@ -106,12 +107,7 @@ function ManaRequest() {
         <div className="d-flex">
             <Sidebar />
             <div style={{ marginLeft: '250px', flexGrow: 1, minHeight: '100vh', backgroundColor: '#f8f9fa', paddingBottom: '40px' }}>
-                <Navbar bg="white" className="px-4 shadow-sm mb-4">
-                    <Navbar.Brand className="fw-bold">📝 Quản lý yêu cầu mở cửa hàng</Navbar.Brand>
-                    <Navbar.Collapse className="justify-content-end">
-                        <Navbar.Text>Chào, Admin 👤</Navbar.Text>
-                    </Navbar.Collapse>
-                </Navbar>
+                <HeaderAdmin/> 
 
                 <Container fluid className="px-4">
                     <Row className="mb-3">

@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Card, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import Sidebar from '../admin/Sidebar';
+import HeaderAdmin from '../admin/HeaderAdmin'; 
 import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale);
@@ -17,27 +18,21 @@ const Dashboard = () => {
     }]
   };
 
-  const navigate = useNavigate()
-  
-  const user = JSON.parse(localStorage.getItem('user'))
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     if (!user || user.role !== 'admin') {
-      navigate('/error')
+      navigate('/error');
       return;
     }
-  })
+  }, []);
 
   return (
     <div className="d-flex">
       <Sidebar />
       <div style={{ marginLeft: '250px', flexGrow: 1, backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
-        <Navbar bg="white" className="px-4 shadow-sm">
-          <Navbar.Brand className="fw-bold">📊 Trang quản trị</Navbar.Brand>
-          <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>Chào, Admin 👤</Navbar.Text>
-          </Navbar.Collapse>
-        </Navbar>
+        <HeaderAdmin/> 
 
         <Container fluid className="p-4">
           <Row className="mb-4">
