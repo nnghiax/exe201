@@ -15,7 +15,7 @@ const userController = {
 
     listUser: async (req, res) => {
         try {
-            const user = await User.find();
+            const user = await User.find({role: {$ne: 'admin'}});
             const result = user.map((u) => ({
                 id: u._id,
                 name: u.name,
@@ -28,8 +28,44 @@ const userController = {
         } catch (error) {
             return res.status(500).json(error.message);
         }
-    }
+    },
 
+    updateProfile: async (req, res) => {
+        try {
+            const id = req.userId
+            const { name, address } = req.body
+            const avatar = req.file?.path
+
+            const user = await User.findById(id)
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' })
+            }
+
+            const updateFields = {}
+            if (name !== undefined) updateFields.name = name
+            let addressData = address;
+            if (typeof address === 'string') {
+                try {
+                    addressData = JSON.parse(address);
+                } catch (e) {
+                    return res.status(400).json({ message: 'Invalid address format' });
+                }
+            }
+
+            if (addressData !== undefined) updateFields.address = addressData;
+
+            if (avatar) updateFields.avatar = avatar
+
+            const updateProfile = await User.findByIdAndUpdate(
+                id,
+                updateFields,
+                { new: true }
+            )
+            return res.status(200).json({ message: 'Update profile successfully', data: updateProfile })
+        } catch (error) {
+            return res.status(500).json(error.message);
+        }
+    }
 
 }
 
