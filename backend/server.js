@@ -8,6 +8,7 @@ const apiRequest = require('./router/apiRequest')
 const apiStore = require('./router/apiStore')
 const apiProduct = require('./router/apiProduct')
 const apiCart = require('./router/apiCart')
+const apiUser = require('./router/apiUser')
 
 
 const hostname = process.env.HOSTNAME
@@ -44,6 +45,9 @@ app.use('/product', apiProduct)
 
 // CART
 app.use('/cart', apiCart)
+
+// USER
+app.use('/user', apiUser)
 
 
 app.listen(port, () => {
