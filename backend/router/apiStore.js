@@ -3,6 +3,9 @@ const storeController = require('../controller/storeController')
 const middleware = require('../controller/middleware')
 const {uploadCloud} = require('../controller/imageUpload')
 
+router.get('/count', middleware.verifyToken, middleware.verifyAdmin, storeController.countStore)
+
+router.get('/list', storeController.listStore)
 
 router.get('/detail/:storeId', storeController.detailStore)
 

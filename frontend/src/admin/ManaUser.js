@@ -11,16 +11,11 @@ function ManaUser() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (!storedUser) {
-            navigate('/error');
-            return;
-        }
-
-        const user = JSON.parse(storedUser);
-        if (user.role !== 'admin') {
-            navigate('/error');
-            return;
+        const user = localStorage.getItem('user')
+        const parseUser = JSON.parse(user)
+        if (parseUser.role !== 'admin') {
+            navigate('/error')
+            return
         }
 
         const fetchData = async () => {

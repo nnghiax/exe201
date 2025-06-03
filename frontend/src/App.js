@@ -9,6 +9,7 @@ import Dashboard from './admin/Dashboard';
 import ManaUser from './admin/ManaUser';
 import ErrorPage from './components/ErrorPage';
 import ManaRequest from './admin/ManaRequest';
+import ManaStore from './admin/ManaStore';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Routes>
 
           {/* UI Components */}
+          <Route path='*' element={<ErrorPage/>}/>
           <Route path='/error' element={<ErrorPage/>}/>
 
           {/* UI Pages */}
@@ -29,6 +31,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/manaUser' element={<ManaUser/>}/>
           <Route path='/manaRequest' element={<ManaRequest/>}/>
+          <Route path='/manaStore' element={<ManaStore/>}/>
 
         </Routes>
       </BrowserRouter>
