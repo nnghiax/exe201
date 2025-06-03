@@ -6,6 +6,7 @@ import {
 import Sidebar from '../admin/Sidebar';
 import HeaderAdmin from '../admin/HeaderAdmin'; 
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ManaRequest() {
     const [requests, setRequests] = useState([]);
@@ -13,7 +14,17 @@ function ManaRequest() {
     const [showModal, setShowModal] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
+
+        const user = localStorage.getItem('user')
+        const parseUser = JSON.parse(user)
+        if(parseUser.role !== 'admin'){
+            navigate('/error')
+            return
+        }
+
         const fetchRequests = async () => {
             try {
                 const res = await axios.get('http://localhost:9999/request/list', {
@@ -139,8 +150,8 @@ function ManaRequest() {
                                         {requests.map((req, idx) => (
                                             <tr key={req._id}>
                                                 <td>{idx + 1}</td>
-                                                <td className="text-start">{req.name}</td>
-                                                <td className="text-start">{req.email}</td>
+                                                <td >{req.name}</td>
+                                                <td >{req.email}</td>
                                                 <td>{new Date(req.createdAt).toLocaleDateString('vi-VN')}</td>
                                                 <td>{renderStatusBadge(req.status)}</td>
                                                 <td>

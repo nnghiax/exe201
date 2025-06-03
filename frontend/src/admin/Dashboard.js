@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import Sidebar from '../admin/Sidebar';
-import HeaderAdmin from '../admin/HeaderAdmin'; 
+import HeaderAdmin from '../admin/HeaderAdmin';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 ChartJS.register(BarElement, CategoryScale, LinearScale);
 
@@ -18,21 +19,46 @@ const Dashboard = () => {
     }]
   };
 
+  const [users, setUsers] = useState(0)
+  const [stores, setStores] = useState(0)
+
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    if (!user || user.role !== 'admin') {
-      navigate('/error');
-      return;
+
+    const user = localStorage.getItem('user')
+    const parseUser = JSON.parse(user)
+    if(parseUser.role !== 'admin'){
+      navigate('/error')
+      return
     }
-  }, []);
+
+    const fetchData = async () => {
+      try {
+        const resUser = await axios.get('http://localhost:9999/user/count', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        const resStore = await axios.get('http://localhost:9999/store/count', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        })
+        setUsers(resUser.data.data)
+        setStores(resStore.data.data)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [])
 
   return (
     <div className="d-flex">
       <Sidebar />
       <div style={{ marginLeft: '250px', flexGrow: 1, backgroundColor: '#f8f9fa', minHeight: '100vh' }}>
-        <HeaderAdmin/> 
+        <HeaderAdmin />
 
         <Container fluid className="p-4">
           <Row className="mb-4">
@@ -40,7 +66,7 @@ const Dashboard = () => {
               <Card className="shadow-sm border-0">
                 <Card.Body>
                   <Card.Title>👥 Người dùng</Card.Title>
-                  <Card.Text className="fs-4 fw-semibold">120</Card.Text>
+                  <Card.Text className="fs-4 fw-semibold">{users}</Card.Text>
                 </Card.Body>
               </Card>
             </Col>
@@ -48,7 +74,7 @@ const Dashboard = () => {
               <Card className="shadow-sm border-0">
                 <Card.Body>
                   <Card.Title>📦 Sản phẩm</Card.Title>
-                  <Card.Text className="fs-4 fw-semibold">320</Card.Text>
+                  <Card.Text className="fs-4 fw-semibold">{stores}</Card.Text>
                 </Card.Body>
               </Card>
             </Col>

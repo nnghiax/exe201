@@ -7,7 +7,7 @@ const userController = {
     countUser: async (req, res) => {
         try {
             const countUser = await User.countDocuments();
-            return res.status(200).json({ count: countUser })
+            return res.status(200).json({ data: countUser })
         } catch (error) {
             return res.status(500).json(error.message)
         }

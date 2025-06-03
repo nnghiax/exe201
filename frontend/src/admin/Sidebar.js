@@ -1,7 +1,7 @@
 // components/Sidebar.jsx
 import React, { useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaChartBar, FaUsers, FaBoxOpen, FaWarehouse, FaChartLine, FaStoreAlt } from 'react-icons/fa';
+import { FaChartBar, FaUsers, FaBoxOpen, FaWarehouse, FaChartLine, FaStoreAlt, FaClipboardList } from 'react-icons/fa';
 
 const linkStyle = {
   color: '#ccc',
@@ -71,9 +71,8 @@ const Sidebar = () => {
       <div className="nav flex-column">
         <StyledNavLink to="/dashboard" icon={FaChartBar}>Dashboard</StyledNavLink>
         <StyledNavLink to="/manaUser" icon={FaUsers}>Người dùng</StyledNavLink>
-        <StyledNavLink to="/manaRequest" icon={FaStoreAlt }>Yêu Cầu</StyledNavLink>
-        <StyledNavLink to="/warehouse" icon={FaWarehouse}>Kho hàng</StyledNavLink>
-        <StyledNavLink to="/report" icon={FaChartLine}>Báo cáo</StyledNavLink>
+        <StyledNavLink to="/manaRequest" icon={FaClipboardList}>Yêu Cầu</StyledNavLink>
+        <StyledNavLink to="/manaStore" icon={FaStoreAlt}>Cửa hàng</StyledNavLink>
       </div>
     </div>
   );
