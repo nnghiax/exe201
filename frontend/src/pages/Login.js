@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert, Image } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ function Login() {
     try {
       const res = await axios.post('http://localhost:9999/auth/login', { email, password });
       if (res.status === 200) {
-        localStorage.setItem('user', JSON.stringify(res.data.user))
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         localStorage.setItem('token', res.data.accessToken);
         setMessage('Đăng nhập thành công!');
         setVariant('success');
@@ -33,6 +34,37 @@ function Login() {
       setVariant('danger');
     }
   };
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const credential = credentialResponse?.credential;
+      if (!credential) {
+        setMessage('Không nhận được thông tin đăng nhập từ Google.');
+        setVariant('danger');
+        return;
+      }
+
+      console.log('GOOGLE CREDENTIAL:', credential);
+
+      const res = await axios.post('http://localhost:9999/auth/google-login', {
+        credential,
+      });
+
+      if (res.status === 200) {
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        localStorage.setItem('token', res.data.accessToken);
+        setMessage('Đăng nhập bằng Google thành công!');
+        setVariant('success');
+        setTimeout(() => navigate('/'), 1500);
+      }
+    } catch (error) {
+      console.error('GOOGLE LOGIN ERROR:', error.response?.data || error.message);
+      const errMsg = error.response?.data?.message || 'Đăng nhập Google thất bại.';
+      setMessage(errMsg);
+      setVariant('danger');
+    }
+  };
+
 
   return (
     <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center beige-bg">
@@ -78,6 +110,21 @@ function Login() {
               >
                 Đăng nhập
               </Button>
+
+              {/* Google Login Section */}
+              <div className="text-center my-3">
+                <span className="text-muted">Hoặc</span>
+              </div>
+
+              <div className="d-flex justify-content-center mb-3">
+                <GoogleLogin
+                  onSuccess={handleGoogleLogin}
+                  onError={() => {
+                    setMessage('Đăng nhập Google thất bại.');
+                    setVariant('danger');
+                  }}
+                />
+              </div>
 
               <div className="text-center mt-3">
                 <small className="text-muted">Chưa có tài khoản?</small>{' '}
